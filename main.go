@@ -22,8 +22,10 @@ import (
 )
 
 type Config struct {
-	DragonBallPort []int `yaml:"DragonBallPort"`
-	SshPort        int   `yaml:"SshPort"`
+	DragonBallPort []int  `yaml:"DragonBallPort"`
+	SshAgentPort   int    `yaml:"SshAgentPort"`
+	SshIP          string `yaml:"SshIP"`
+	SshPort        int    `yaml:"SshPort"`
 }
 
 type Shiny struct {
@@ -128,7 +130,9 @@ func trafficForwardingHandler(conn net.Conn) bool {
 
 	remoteAddr := conn.RemoteAddr().(*net.TCPAddr)
 	log.Println("[!] Connected from:", remoteAddr.IP, " 其激活ssh端口,连接成功")
-	serverConn, _ := net.Dial("tcp", "localhost:22")
+
+	address := config.SshIP + ":" + strconv.Itoa(config.SshPort)
+	serverConn, _ := net.Dial("tcp", address)
 	go func() {
 		io.Copy(serverConn, conn)
 	}()
@@ -139,7 +143,7 @@ func trafficForwardingHandler(conn net.Conn) bool {
 
 func sshPortHandler() {
 	defer wg.Done()
-	address := "0.0.0.0" + ":" + strconv.Itoa(config.SshPort)
+	address := "0.0.0.0" + ":" + strconv.Itoa(config.SshAgentPort)
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		log.Fatalf("[!] sshPort监听失败, error :%v", err)

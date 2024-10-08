@@ -2,5 +2,9 @@ DragonBallPort:
   - 4444
   - 9999
 
-SshPort: 7000
+SshAgentPort: 7000
+
+SshIP: "127.0.0.1"
+#不一定是ssh绑定的端口
+SshPort: 22
 
