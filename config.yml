@@ -1,0 +1,6 @@
+DragonBallPort:
+  - 4444
+  - 9999
+
+SshPort: 7000
+
