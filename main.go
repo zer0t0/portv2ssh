@@ -1,9 +1,8 @@
 /*
-- @Time         : 2024/10/8
+- @Time         : 2024/10/9
 - @Author       : :)
-- @File        	: portRefraction
-- @Version      : 1.0
-- @Description  : （建议配置:	1.修改ssh端口的源访问白名单为本地环回地址; 2.SshPort不等于ssh的源端口）
+- @File        	: portv2ssh
+- @Version      : 1.0.1
 */
 package main
 
@@ -148,7 +147,7 @@ func sshPortHandler() {
 	if err != nil {
 		log.Fatalf("[!] sshPort监听失败, error :%v", err)
 	} else {
-		log.Printf("[+] %d端口 监听成功", config.SshPort)
+		log.Printf("[+] %d端口 监听成功", config.SshAgentPort)
 	}
 
 	for {
@@ -189,6 +188,7 @@ func dragonBallPortHandler() {
 					}
 					shiny.length = 0
 				}
+
 				shiny.order[shiny.length] = port
 				shiny.length++
 
